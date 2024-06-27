@@ -2,7 +2,7 @@
 
 HarmonyOsDialog是一个便捷的弹窗，**一行代码便可以搞定**，只需初始化一次，便在任何地方都可以弹出，脱离原生Dialog限制，Dialog中也封装了包含常见的弹窗样式，并且支持自定义页面，自定义组件形式。
 
-截至2024年5月23日，功能点如下
+截至2024年6月25日，功能点如下
 
 - 1、**支持自定义页面弹窗形式**
 - 2、**支持自定义组件弹窗形式**
@@ -10,7 +10,9 @@ HarmonyOsDialog是一个便捷的弹窗，**一行代码便可以搞定**，只�
 - 3、**支持确认/取消弹窗样式**
 - 4、**支持底部列表弹窗(可动态修改样式)**
 - 5、**支持底部网格列表形式（如常见的分享）**
-- 6、**支持Toast提示，可任意修改属性，可设置图片，支持左上右下四个方位设置**
+- 6、**支持城市地址选择**
+- 7、**支持各种时间格式选择**
+- 8、**支持Toast提示，可任意修改属性，可设置图片，支持左上右下四个方位设置**
 
 ## 开发环境
 
@@ -31,6 +33,11 @@ hvigorVersion：4.2.0
 <img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_006.png" width="150px" />
 <img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_007.png" width="150px" />
 <img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_008.png" width="150px" />
+<img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_009.png" width="150px" />
+<img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_010.png" width="150px" />
+<img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_011.png" width="150px" />
+<img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_012.png" width="150px" />
+<img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_013.png" width="150px" />
 </p>
 
 ## 动态效果
@@ -55,14 +62,14 @@ ohpm install @abner/dialog
 方式二：在工程的oh-package.json5中设置三方包依赖，配置示例如下：
 
 ```
-"dependencies": { "@abner/dialog": "^1.0.0"}
+"dependencies": { "@abner/dialog": "^1.0.1"}
 ```
 
 <p align="center"><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_01.png" width="300"></p>
 
 ### 2、本地静态共享包har包使用【不推荐】
 
-<p>首先，下载har包，<a href="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog-1.0.0.har">点击下载</a></p>
+<p>首先，下载har包，<a href="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog-1.0.1.har">点击下载</a></p>
 <p>下载之后，把har包复制项目中，目录自己创建，如下，我创建了一个libs目录，复制进去</p>
 <p><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_02.png"></p>
 <p>引入之后，进行同步项目，点击Sync Now即可，当然了你也可以，将鼠标放置在报错处会出现提示，在提示框中点击Run 'ohpm install'。</p>
@@ -418,6 +425,94 @@ struct ADialogPage {
 
 ```typescript
    showToast("Toast设置Icon", { leftSrc: $r("app.media.app_icon") })
+```
+
+### 14、底部单列表
+
+```typescript
+   showBottomListScrollDialog({
+  items: ["男", "女"],
+  titleBarAttribute: {
+    titleText: "选择性别"
+  },
+  listAttribute: {
+    isCustomDivider: true
+  },
+  confirmClick: (value, index) => {
+    console.log(value + "=========" + index)
+  }
+})
+```
+
+### 15、底部双列表不联动
+
+```typescript
+showBottomListScrollDialog({
+  items: [["第一列1", "第一列2"], ["第二列1", "第二列2", "第二列3"]],
+  titleBarAttribute: {
+    titleText: "底部双列表不联动"
+  },
+  confirmClick: (value, index) => {
+    console.log(value + "=========" + index)
+  }
+})
+```
+
+### 16、年月日时间弹窗
+
+```typescript
+showTimeDialog({
+  titleBarAttribute: {
+    titleText: "年月日时间弹窗",
+  },
+  confirmClick: (value, index) => {
+    console.log(value + "=========" + index)
+  }
+})
+```
+### 17、时分秒弹窗
+
+```typescript
+showTimeDialog({
+  titleBarAttribute: {
+    titleText: "时分秒弹窗",
+  },
+  timeAttribute: {
+    timeType: TimeDialogType.HMS
+  },
+  confirmClick: (value, index) => {
+    console.log(value + "=========" + index)
+  }
+})
+```
+
+### 19、时分弹窗
+
+```typescript
+showTimeDialog({
+  titleBarAttribute: {
+    titleText: "时分弹窗",
+  },
+  timeAttribute: {
+    timeType: TimeDialogType.HM
+  },
+  confirmClick: (value, index) => {
+    console.log(value + "=========" + index)
+  }
+})
+```
+
+### 20、城市地址弹窗
+
+```typescript
+showAddressDialog({
+  titleBarAttribute: {
+    titleText: "城市地址弹窗",
+  },
+  confirmClick: (value, index) => {
+    console.log(value + "=========" + index)
+  }
+})
 ```
 
 
