@@ -4,6 +4,7 @@
     "type": "entry",
     "description": "$string:module_desc",
     "mainElement": "EntryAbility",
+    "srcEntry": "./ets/pages/App.ets",
     "deviceTypes": [
       "phone"
     ],

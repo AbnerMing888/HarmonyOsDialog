@@ -1,4 +1,4 @@
-import { DialogBottomRootView } from '@abner/dialog/Index'
+import { DialogBottomRootView } from '@abner/dialog'
 
 @Component
 export struct SelfView {
