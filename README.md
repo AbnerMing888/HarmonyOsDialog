@@ -1,30 +1,32 @@
 ## 介绍
 
-HarmonyOsDialog是一个便捷的弹窗，**一行代码便可以搞定**，只需初始化一次，便在任何地方都可以弹出，脱离原生Dialog限制，Dialog中也封装了包含常见的弹窗样式，并且支持自定义页面，自定义组件形式。
+HarmonyOsDialog是一个便捷的弹窗，**一行代码便可以搞定**，**无须初始化**，便在任何地方都可以弹出，Dialog中也封装了包含常见的弹窗样式，并且支持自定义组件形式。
 
-截至2024年6月25日，功能点如下
+目前功能项：
 
-- 1、**支持自定义页面弹窗形式**
-- 2、**支持自定义组件弹窗形式**
-- 3、**支持信息弹窗样式**
+- 1、**支持自定义组件弹窗形式**
+- 2、**支持信息弹窗样式**
 - 3、**支持确认/取消弹窗样式**
 - 4、**支持底部列表弹窗(可动态修改样式)**
 - 5、**支持底部网格列表形式（如常见的分享）**
 - 6、**支持城市地址选择**
 - 7、**支持各种时间格式选择**
 - 8、**支持Toast提示，可任意修改属性，可设置图片，支持左上右下四个方位设置**
+- 9、**支持任意位置弹出**
+- 10、**支持PopupWindow弹出，可在组件的任何位置**
 
 ## 开发环境
 
-DevEco Studio NEXT Developer Beta1,Build Version: 5.0.3.100
+DevEco Studio NEXT Developer Beta1,Build Version: 5.0.3.403
 
 Api版本：**11**
 
-hvigorVersion：4.2.0
+modelVersion：5.0.0
 
 ## 效果
 
 <p align="center">
+<img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_all.png" width="150px" />
 <img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_001.png" width="150px" />
 <img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_002.png" width="150px" />
 <img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_003.png" width="150px" />
@@ -62,14 +64,14 @@ ohpm install @abner/dialog
 方式二：在工程的oh-package.json5中设置三方包依赖，配置示例如下：
 
 ```
-"dependencies": { "@abner/dialog": "^1.0.1"}
+"dependencies": { "@abner/dialog": "^1.0.4"}
 ```
 
 <p align="center"><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_01.png" width="300"></p>
 
 ### 2、本地静态共享包har包使用【不推荐】
 
-<p>首先，下载har包，<a href="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog-1.0.1.har">点击下载</a></p>
+<p>首先，下载har包，<a href="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog-1.0.4.har">点击下载</a></p>
 <p>下载之后，把har包复制项目中，目录自己创建，如下，我创建了一个libs目录，复制进去</p>
 <p><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_02.png"></p>
 <p>引入之后，进行同步项目，点击Sync Now即可，当然了你也可以，将鼠标放置在报错处会出现提示，在提示框中点击Run 'ohpm install'。</p>
@@ -85,55 +87,20 @@ ohpm install @abner/dialog
 
 ## 代码使用
 
-### 1、全局初始化
+### 1、初始化
 
-第一步、创建一个page，名字自定义，如下所示，我创建了一个ADialogPage页面，并引入ADialogView，**以下代码可直接复制**
-，如果创建的页面在main_pages.json中没有依赖，需要手动进行依赖！！！
-
-```typescript
-
-import { ADialogView, hideDialog } from '@abner/dialog';
-
-@Entry
-@Component
-struct ADialogPage {
-
-  build() {
-    RelativeContainer() {
-      ADialogView()
-        .id('a_dialog')
-        .alignRules({
-          center: { anchor: '__container__', align: VerticalAlign.Center },
-          middle: { anchor: '__container__', align: HorizontalAlign.Center }
-        })
-    }
-    .height('100%')
-      .width('100%')
-  }
-
-  /*
-  * Author:AbnerMing
-  * Describe:监听点击返回键
-  */
-  onBackPress(): boolean | void {
-    hideDialog()
-  }
-}
-
-```
-
-第二步、在您使用的Module中，EntryAbility类中，onWindowStageCreate方法里进行初始化，**必须！**
+初始化可以更改统一的配置，比如宽高，比如大小、比如背景等等，当然是在需要的情况下，如果默认的样式满足需求，全局初始化可以省略，您也可以在单独调用的时候进行修改样式。
 
 ```typescript
 
-dialogInit(windowStage, "pages/ADialogPage")
+initDialog(attribute)
 
 ```
+
+**属性介绍**
 
 | 属性          | 类型                 | 概述                                      |
 |-------------|--------------------|-----------------------------------------|
-| windowStage | window.WindowStage | 窗口管理器                                   |
-| pagePath    | string             | 自己刚才创建的页面                               |
 | attribute   | FusionAttribute    | 可选参数，dialog属性全局配置，用于修改弹窗样式，可根据UI在这里进行配置 |
 
 
@@ -142,12 +109,14 @@ dialogInit(windowStage, "pages/ADialogPage")
 FusionAttribute是全局的dialog属性配置，如果默认提供的dialog样式和您的项目中样式不一样，可通过此参数进行设置，全局配置一次
 页面中的所有使用地方均会生效，方便您后续使用。
 
-| 属性                     | 类型                  | 概述                  |
-|------------------------|---------------------|---------------------|
-| infoOrConfirmAttribute | ContentAttribute    | 可选参数，信息或者确认形式弹窗属性配置 |
-| bottomListAttribute    | BottomListAttribute | 可选参数，底部列表弹窗属性配置     |
-| bottomGridAttribute    | BottomGridAttribute | 可选参数，底部网格列表弹窗属性配置   |
-| toastAttribute         | ToastAttribute      | 可选参数，Toast属性配置      |
+| 属性                        | 类型                        | 概述                  |
+|---------------------------|---------------------------|---------------------|
+| infoOrConfirmAttribute    | ContentAttribute          | 可选参数，信息或者确认形式弹窗属性配置 |
+| bottomListAttribute       | BottomListAttribute       | 可选参数，底部列表弹窗属性配置     |
+| bottomGridAttribute       | BottomGridAttribute       | 可选参数，底部网格列表弹窗属性配置   |
+| bottomListScrollAttribute | BottomListScrollAttribute | 可选参数，底部的滑动列表属性      |
+| toastAttribute            | ToastAttribute            | 可选参数，Toast属性配置      |
+| loadingAttribute          | LoadingAttribute          | 可选参数，loading提示      |
 
 ##### ContentAttribute属性
 
@@ -247,15 +216,17 @@ BottomListAttribute是底部列表弹窗属性配置。
 | imageHeight     | Length                                     | 图片高度           |
 | imageAlt        | string /Resource                           | 加载时显示的占位图      |
 
+
+
 ### 2、信息弹窗
 
 ```typescript
-showInfoDialog({
+showDialogInfo({
   title: "我是标题",
   message: "我是一段描述",
   clickConfirm: () => {
     //确认
-   
+    console.log("===确认")
   }
 })
 ```
@@ -263,14 +234,16 @@ showInfoDialog({
 ### 3、确认/取消弹窗
 
 ```typescript
-showConfirmDialog({
+showDialogConfirm({
   title: "我是一个标题",
   message: "我是一段描述",
   clickCancel: () => {
     //取消
+    console.log("===取消")
   },
   clickConfirm: () => {
     //确认
+    console.log("===确认")
   }
 })
 ```
@@ -286,13 +259,53 @@ showBottomListDialog({
 })
 ```
 
-### 4、底部列表透明
+### 4、确认提示信息弹窗
 
 ```typescript
-showBottomListDialog({
+showDialogConfirm({
+          title: "我是一个标题",
+          message: "我是一段描述",
+          isShowInformation: true, //展示信息
+          informationAttribute: {
+            checkboxSelect: true, //是否默认选中
+            iconAttribute: {
+              srcSelect: $r("app.media.startIcon"), //选中
+              srcUnselected: $r("app.media.loading001"), //未选中
+            },
+            onChange: (isChange) => {
+              //点击改变了状态
+              console.log("===" + isChange)
+            }
+          },
+          clickCancel: () => {
+            //取消
+            console.log("===取消")
+          },
+          clickConfirm: () => {
+            //确认
+            console.log("===确认")
+          }
+        })
+```
+
+### 5、底部列表
+
+```typescript
+ showDialogBottomList({
+          items: ["我是条目一", "我是条目二"],
+          itemClick: (position: number) => {
+            console.log("==========:" + position)
+          }
+        })
+```
+
+### 6、底部列表透明
+
+```typescript
+showDialogBottomList({
   items: ["我是条目一", "我是条目二"],
   itemClick: (position: number) => {
-    hideDialog()
+    console.log("==========:" + position)
   },
   isTransparent: true,
   dialogAttribute: {
@@ -302,141 +315,151 @@ showBottomListDialog({
 })
 ```
 
-### 5、底部列表多样式
+### 6、底部列表多样式
 
 ```typescript
-showBottomListDialog({
-          itemModels: [new BottomListModel("条目一", { fontColor: Color.Red }), new BottomListModel("条目二")],
-          itemClick: (position: number) => {
-            hideDialog()//销毁dialog
-          }
-        })
-```
-
-### 6、底部网格列表
-```typescript
-showBottomGridDialog({
-          columnSize: 4,
-          items: [new BottomGridModel("微信", $r("app.media.app_icon")),
-            new BottomGridModel("朋友圈", $r("app.media.app_icon")),
-            new BottomGridModel("QQ", $r("app.media.app_icon")),
-            new BottomGridModel("QQ空间", $r("app.media.app_icon")),
-            new BottomGridModel("微博", $r("app.media.app_icon")),
-            new BottomGridModel("微博", $r("app.media.app_icon")),
-            new BottomGridModel("微博", $r("app.media.app_icon")),
-            new BottomGridModel("微博", $r("app.media.app_icon"))
-          ],
-        })
-```
-### 7、底部网格按行区分
-```typescript
-showBottomGridDialog({
-          columnSize: 4,
-          isShowBottomCancel: true,
-          isHideBar: true,
-          itemLineArray: [
-            [new BottomGridModel("测试", $r("app.media.app_icon")),
-              new BottomGridModel("测试", $r("app.media.app_icon"))],
-            [new BottomGridModel("测试", $r("app.media.app_icon")),
-              new BottomGridModel("测试", $r("app.media.app_icon")),
-              new BottomGridModel("测试", $r("app.media.app_icon"))]
-          ],
-          itemClick: (position) => {
-            
-          }
-        })
-```
-### 8、自定义组件弹窗一
-
-默认组件会居中弹出。
-
-第一步：弹出自定义组件代码，参数为number类型，用来区分你要弹出的类型
-
-```typescript
- showCustomDialog(0)
-```
-
-第二步，在初始化中，定义自己的组件即可,给ADialogView，传递customView属性，在自定义组件中以类型作为组分即可。
-
-```typescript
-@Entry
-@Component
-struct ADialogPage {
-  @Builder
-  customView(type: number) {
-    if (type == 0) {
-      //自定义弹窗，可以把视图抽取出去
-      Column() {
-        Text("我是一个自定义的弹窗")
-      }.width("100%")
-      .height(100)
-      .justifyContent(FlexAlign.Center)
-      .backgroundColor(Color.White)
-    } else if (type == 1) {
-      //自定义弹窗2，可以把组件单独的抽出去
-      SelfView()
-    }
+ showDialogBottomList({
+  itemModels: [new BottomListModel("条目一", { fontColor: Color.Red }), new BottomListModel("条目二")],
+  itemClick: (position: number) => {
+    hide()
   }
+})
+```
 
-  build() {
-    RelativeContainer() {
-      ADialogView({
-        customView: this.customView
+### 7、底部网格列表
+```typescript
+showDialogBottomGrid({
+  columnSize: 4,
+  items: [new BottomGridModel("微信", $r("app.media.app_icon")),
+    new BottomGridModel("朋友圈", $r("app.media.app_icon")),
+    new BottomGridModel("QQ", $r("app.media.app_icon")),
+    new BottomGridModel("QQ空间", $r("app.media.app_icon")),
+    new BottomGridModel("微博", $r("app.media.app_icon")),
+    new BottomGridModel("微博", $r("app.media.app_icon")),
+    new BottomGridModel("微博", $r("app.media.app_icon")),
+    new BottomGridModel("微博", $r("app.media.app_icon"))
+  ],
+  itemClick: (position) => {
+    console.log("==============:" + position)
+  }
+})
+```
+### 8、底部网格按行区分
+```typescript
+showDialogBottomGrid({
+  columnSize: 4,
+  isShowBottomCancel: true,
+  isHideBar: true,
+  itemLineArray: [
+    [new BottomGridModel("测试", $r("app.media.app_icon")),
+      new BottomGridModel("测试", $r("app.media.app_icon"))],
+    [new BottomGridModel("测试", $r("app.media.app_icon")),
+      new BottomGridModel("测试", $r("app.media.app_icon")),
+      new BottomGridModel("测试", $r("app.media.app_icon"))]
+  ],
+  itemClick: (position) => {
+    console.log("==============" + position)
+  }
+})
+```
+### 9、自定义组件弹窗
+
+首先要自定义一个**全局组件**,可传入自定义的组件，或者直接写布局
+
+```typescript
+/*
+* Author:AbnerMing
+* Describe:自定义弹窗,布局自己定义
+*/
+@Builder
+function BuilderDialog() {
+  Column() {
+    Text("我是一个自定义弹窗")
+      .margin({ top: 30 })
+    Row() {
+      Button("取消").onClick(() => {
+        //隐藏dialog
+        hide()
       })
-        .id('a_dialog')
-        .alignRules({
-          center: { anchor: '__container__', align: VerticalAlign.Center },
-          middle: { anchor: '__container__', align: HorizontalAlign.Center }
-        })
-    }
-    .height('100%')
-    .width('100%')
-  }
-
-  /*
-  * Author:AbnerMing
-  * Describe:监听点击返回键
-  */
-  onBackPress(): boolean | void {
-    hideDialog()
-  }
+      Button("确定")
+        .margin({ left: 30 })
+    }.margin({ top: 20 })
+    .margin({ top: 30 })
+  }.backgroundColor(Color.White)
+  .width("60%")
 }
+
+```
+代码调用
+
+```typescript
+  showDialog(wrapBuilder(BuilderDialog))
 ```
 
 
-### 9、自定义页面弹窗
-传递你的page路径即可，同组件下相对路径，不同组件下绝对路径，由于所有的页面都是自己完成，需要主要dialog销毁场景，比如点击空白，比如点击返回键等。
-```typescript
- showCustomDialogPage("pages/TimePage")
-```
-### 10、toast提示
-```typescript
- showToast("我是一个普通的toast")
-```
-### 11、toast改变背景
-```typescript
-  showToast("我是一个改变背景的Toast", { backgroundColor: Color.Red })
-```
-### 12、toast改变位置
-```typescript
- showToast("我是一个改变位置的Toast", { flexAlign: FlexAlign.Center })
-```
-### 13、toast图片设置
+### 10、自定义组件弹窗带参数
+
+首先要自定义一个**全局组件**,可传入自定义的组件，或者直接写布局
 
 ```typescript
-   showToast("Toast设置Icon", { leftSrc: $r("app.media.app_icon") })
+
+class DialogParams {
+  title?: string
+}
+
+@Builder
+function BuilderDialogParams(params: DialogParams) {
+  Column() {
+    Text(params.title)
+      .margin({ top: 30 })
+    Row() {
+      Button("取消").onClick(() => {
+        //隐藏dialog
+        hide()
+      })
+      Button("确定")
+        .margin({ left: 30 })
+    }.margin({ top: 20 })
+    .margin({ top: 30 })
+  }.backgroundColor(Color.White)
+  .width("60%")
+}
+
 ```
 
-### 14、底部单列表
+代码调用
 
 ```typescript
-   showBottomListScrollDialog({
+ let params = new DialogParams()
+params.title = "我是传递的参数"
+showDialogParams(wrapBuilder(BuilderDialogParams), params)
+```
+
+### 11、toast提示
+```typescript
+  toast("我是一个普通的toast")
+```
+### 12、toast改变背景
+```typescript
+  toast("我是一个改变背景的Toast", { backgroundColor: Color.Red })
+```
+### 13、toast改变位置
+```typescript
+   toast("我是一个改变位置的Toast", { alignment: DialogAlignment.Center })
+```
+### 14、toast图片设置
+
+```typescript
+     toast("Toast设置Icon", { leftSrc: $r("app.media.app_icon") })
+```
+
+### 15、底部单列表
+
+```typescript
+  showDialogBottomListScroll({
   items: ["男", "女"],
   titleBarAttribute: {
     titleText: "选择性别"
-  },
-  listAttribute: {
-    isCustomDivider: true
   },
   confirmClick: (value, index) => {
     console.log(value + "=========" + index)
@@ -444,10 +467,11 @@ struct ADialogPage {
 })
 ```
 
-### 15、底部双列表不联动
+### 16、底部双列表不联动
 
 ```typescript
-showBottomListScrollDialog({
+showDialogBottomListScroll({
+  selected: [1, 2],
   items: [["第一列1", "第一列2"], ["第二列1", "第二列2", "第二列3"]],
   titleBarAttribute: {
     titleText: "底部双列表不联动"
@@ -458,60 +482,258 @@ showBottomListScrollDialog({
 })
 ```
 
-### 16、年月日时间弹窗
+### 17、底部双列表联动
 
 ```typescript
-showTimeDialog({
-  titleBarAttribute: {
-    titleText: "年月日时间弹窗",
-  },
-  confirmClick: (value, index) => {
-    console.log(value + "=========" + index)
-  }
-})
+showDialogBottomListScroll({
+          items: this.doubleList,
+          titleBarAttribute: {
+            titleText: "底部双列表联动"
+          },
+          confirmClick: (value, index) => {
+            console.log(value + "=========" + index)
+          }
+        })
 ```
-### 17、时分秒弹窗
+
+### 18、底部三列表联动
 
 ```typescript
-showTimeDialog({
+ showDialogBottomListScroll({
+          items: this.thirdList,
+          titleBarAttribute: {
+            titleText: "底部三列表联动",
+          },
+          confirmClick: (value, index) => {
+            console.log(value + "=========" + index)
+          }
+        })
+```
+
+### 19、年月日时分秒时间弹窗
+
+```typescript
+showDialogTime({
   titleBarAttribute: {
-    titleText: "时分秒弹窗",
+    titleText: "年月日时分秒-弹窗",
   },
   timeAttribute: {
-    timeType: TimeDialogType.HMS
+    timeType: TimeDialogType.YMDHMS,
+  },
+  timeConfirmClick: (date) => {
+    //时间回调
+    console.log("===时间结果：" + date)
   },
   confirmClick: (value, index) => {
-    console.log(value + "=========" + index)
+    //内容和索引回调
+    console.log("===内容结果：" + value + "===索引结果：" + index)
   }
 })
 ```
-
-### 19、时分弹窗
+### 20、年月日时分弹窗
 
 ```typescript
-showTimeDialog({
+showDialogTime({
   titleBarAttribute: {
-    titleText: "时分弹窗",
+    titleText: "年月日时分-弹窗",
   },
   timeAttribute: {
-    timeType: TimeDialogType.HM
+    timeType: TimeDialogType.YMDHM
+  },
+  timeConfirmClick: (date) => {
+    //时间回调
+    console.log("===时间结果：" + date)
   },
   confirmClick: (value, index) => {
-    console.log(value + "=========" + index)
+    //内容和索引回调
+    console.log("===内容结果：" + value + "===索引结果：" + index)
   }
 })
 ```
 
-### 20、城市地址弹窗
+### 21、年月日弹窗
 
 ```typescript
-showAddressDialog({
+showDialogTime({
+  titleBarAttribute: {
+    titleText: "年月日-弹窗",
+  },
+  timeAttribute: {
+    startTime: "2022-6-12",
+    endTime: "2025-8-20",
+  },
+  timeConfirmClick: (date) => {
+    //时间回调
+  },
+  confirmClick: (value, index) => {
+    //内容和索引回调
+  }
+})
+```
+
+### 22、月日弹窗
+
+```typescript
+showDialogTime({
+  titleBarAttribute: {
+    titleText: "月日-弹窗",
+  },
+  timeAttribute: {
+    timeType: TimeDialogType.MD
+  },
+  timeConfirmClick: (date) => {
+    //时间回调
+  },
+  confirmClick: (value, index) => {
+    //内容和索引回调
+  }
+})
+
+```
+
+### 22、时分秒弹窗
+
+```typescript
+showDialogTime({
+  titleBarAttribute: {
+    titleText: "时分秒-弹窗",
+  },
+  timeAttribute: {
+    timeType: TimeDialogType.HMS,
+  },
+  timeConfirmClick: (date) => {
+    //时间回调
+  },
+  confirmClick: (value, index) => {
+    //内容和索引回调
+  }
+})
+```
+
+### 23、城市地址弹窗
+
+```typescript
+ showDialogAddress({
   titleBarAttribute: {
     titleText: "城市地址弹窗",
   },
   confirmClick: (value, index) => {
-    console.log(value + "=========" + index)
   }
+})
+```
+
+### 24、PopupWindow弹出
+
+首先要定义弹出的组件，自定义即可，支持自定义组件形式，传入即可
+
+```typescript
+/**
+ * AUTHOR:AbnerMing
+ * INTRODUCE:popup 弹出框,可以自定义，任意组件
+ * */
+@Builder
+function BuilderWindowView() {
+  Text("我是任意的组件")
+    .backgroundColor(Color.Pink)
+}
+```
+
+#### 任意位置
+```typescript
+ showPopupWindow({
+  view: wrapBuilder(BuilderWindowView),
+  x: 60,
+  y: 300
+})
+```
+
+#### 上边
+```typescript
+ showPopupWindow({
+            id: "popupTop",//要弹出的组件id,也就是你要在哪一个组件进行弹出
+            view: wrapBuilder(BuilderWindowView)
+          })
+```
+
+#### 下边
+```typescript
+  showPopupWindow({
+  id: "popupBottom",//要弹出的组件id,也就是你要在哪一个组件进行弹出
+  view: wrapBuilder(BuilderWindowView),
+  direction: PopupDirection.BOTTOM
+})
+```
+
+#### 左边
+```typescript
+ showPopupWindow({
+  id: "popupLeft",
+  view: wrapBuilder(BuilderWindowView),
+  direction: PopupDirection.LEFT
+})
+```
+#### 右边
+```typescript
+showPopupWindow({
+            id: "popupRight",
+            view: wrapBuilder(BuilderWindowView),
+            direction: PopupDirection.RIGHT
+          })
+```
+#### 左上
+```typescript
+showPopupWindow({
+  id: "popupTopLeft",
+  view: wrapBuilder(BuilderWindowView),
+  direction: PopupDirection.TOP_LEFT
+})
+```
+#### 右上
+```typescript
+ showPopupWindow({
+            id: "popupTopRight",
+            view: wrapBuilder(BuilderWindowView),
+            direction: PopupDirection.TOP_RIGHT
+          })
+```
+#### 左下
+```typescript
+ showPopupWindow({
+            id: "popupBottomLeft",
+            view: wrapBuilder(BuilderWindowView),
+            direction: PopupDirection.BOTTOM_LEFT
+          })
+```
+#### 右下
+```typescript
+ showPopupWindow({
+            id: "popupBottomRight",
+            view: wrapBuilder(BuilderWindowView),
+            direction: PopupDirection.BOTTOM_RIGHT
+          })
+```
+
+#### 携带参数
+```typescript
+
+class WindowParams {
+  title?: string
+}
+
+@Builder
+function BuilderWindowParams(params: WindowParams) {
+  Text(params.title)
+    .backgroundColor(Color.Pink)
+}
+
+//代码调用
+let params = new WindowParams()
+params.title = "我是携带的参数"
+showPopupWindow({
+  id: "popupParams",
+  params: params,
+  viewParams: wrapBuilder(BuilderWindowParams),
+  direction: PopupDirection.BOTTOM
 })
 ```
 
