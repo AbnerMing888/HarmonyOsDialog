@@ -3,6 +3,7 @@ import { hideDialog } from '@abner/dialog'
 @Entry
 @Component
 struct TestPage {
+
   aboutToAppear(): void {
 
   }

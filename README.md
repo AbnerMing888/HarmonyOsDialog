@@ -17,7 +17,7 @@ HarmonyOsDialog是一个便捷的弹窗，**一行代码便可以搞定**，**�
 
 ## 开发环境
 
-DevEco Studio NEXT Developer Beta1,Build Version: 5.0.3.403
+DevEco Studio NEXT Developer Beta1,Build Version: 5.0.3.706
 
 Api版本：**11**
 
@@ -64,20 +64,10 @@ ohpm install @abner/dialog
 方式二：在工程的oh-package.json5中设置三方包依赖，配置示例如下：
 
 ```
-"dependencies": { "@abner/dialog": "^1.0.4"}
+"dependencies": { "@abner/dialog": "^1.0.6"}
 ```
 
 <p align="center"><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_01.png" width="300"></p>
-
-### 2、本地静态共享包har包使用【不推荐】
-
-<p>首先，下载har包，<a href="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog-1.0.4.har">点击下载</a></p>
-<p>下载之后，把har包复制项目中，目录自己创建，如下，我创建了一个libs目录，复制进去</p>
-<p><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_02.png"></p>
-<p>引入之后，进行同步项目，点击Sync Now即可，当然了你也可以，将鼠标放置在报错处会出现提示，在提示框中点击Run 'ohpm install'。</p>
-<p>需要注意，<strong>@abner/dialog</strong>，是用来区分目录的，可以自己定义，比如@aa/bb等，关于静态共享包的创建和使用，请查看如下我的介绍，这里就不过多介绍</p>
-
-[HarmonyOS开发：走进静态共享包的依赖与使用](https://juejin.cn/post/7274982412245876776)
 
 ### 查看是否引用成功
 
@@ -117,6 +107,8 @@ FusionAttribute是全局的dialog属性配置，如果默认提供的dialog样�
 | bottomListScrollAttribute | BottomListScrollAttribute | 可选参数，底部的滑动列表属性      |
 | toastAttribute            | ToastAttribute            | 可选参数，Toast属性配置      |
 | loadingAttribute          | LoadingAttribute          | 可选参数，loading提示      |
+| isUseMainWindow           | boolean                   | 是使用主window还是子window,默认是子 |
+
 
 ##### ContentAttribute属性
 
@@ -315,7 +307,7 @@ showDialogBottomList({
 })
 ```
 
-### 6、底部列表多样式
+### 7、底部列表多样式
 
 ```typescript
  showDialogBottomList({
@@ -326,7 +318,7 @@ showDialogBottomList({
 })
 ```
 
-### 7、底部网格列表
+### 8、底部网格列表
 ```typescript
 showDialogBottomGrid({
   columnSize: 4,
@@ -344,7 +336,7 @@ showDialogBottomGrid({
   }
 })
 ```
-### 8、底部网格按行区分
+### 9、底部网格按行区分
 ```typescript
 showDialogBottomGrid({
   columnSize: 4,
@@ -362,7 +354,7 @@ showDialogBottomGrid({
   }
 })
 ```
-### 9、自定义组件弹窗
+### 10、自定义组件弹窗
 
 首先要自定义一个**全局组件**,可传入自定义的组件，或者直接写布局
 
@@ -397,7 +389,7 @@ function BuilderDialog() {
 ```
 
 
-### 10、自定义组件弹窗带参数
+### 11、自定义组件弹窗带参数
 
 首先要自定义一个**全局组件**,可传入自定义的组件，或者直接写布局
 
@@ -435,25 +427,25 @@ params.title = "我是传递的参数"
 showDialogParams(wrapBuilder(BuilderDialogParams), params)
 ```
 
-### 11、toast提示
+### 12、toast提示
 ```typescript
   toast("我是一个普通的toast")
 ```
-### 12、toast改变背景
+### 13、toast改变背景
 ```typescript
   toast("我是一个改变背景的Toast", { backgroundColor: Color.Red })
 ```
-### 13、toast改变位置
+### 14、toast改变位置
 ```typescript
    toast("我是一个改变位置的Toast", { alignment: DialogAlignment.Center })
 ```
-### 14、toast图片设置
+### 15、toast图片设置
 
 ```typescript
      toast("Toast设置Icon", { leftSrc: $r("app.media.app_icon") })
 ```
 
-### 15、底部单列表
+### 16、底部单列表
 
 ```typescript
   showDialogBottomListScroll({
@@ -467,7 +459,7 @@ showDialogParams(wrapBuilder(BuilderDialogParams), params)
 })
 ```
 
-### 16、底部双列表不联动
+### 17、底部双列表不联动
 
 ```typescript
 showDialogBottomListScroll({
@@ -482,7 +474,7 @@ showDialogBottomListScroll({
 })
 ```
 
-### 17、底部双列表联动
+### 18、底部双列表联动
 
 ```typescript
 showDialogBottomListScroll({
@@ -496,7 +488,7 @@ showDialogBottomListScroll({
         })
 ```
 
-### 18、底部三列表联动
+### 19、底部三列表联动
 
 ```typescript
  showDialogBottomListScroll({
@@ -510,7 +502,7 @@ showDialogBottomListScroll({
         })
 ```
 
-### 19、年月日时分秒时间弹窗
+### 20、年月日时分秒时间弹窗
 
 ```typescript
 showDialogTime({
@@ -530,7 +522,7 @@ showDialogTime({
   }
 })
 ```
-### 20、年月日时分弹窗
+### 21、年月日时分弹窗
 
 ```typescript
 showDialogTime({
@@ -551,7 +543,7 @@ showDialogTime({
 })
 ```
 
-### 21、年月日弹窗
+### 22、年月日弹窗
 
 ```typescript
 showDialogTime({
@@ -571,7 +563,7 @@ showDialogTime({
 })
 ```
 
-### 22、月日弹窗
+### 23、月日弹窗
 
 ```typescript
 showDialogTime({
@@ -591,7 +583,7 @@ showDialogTime({
 
 ```
 
-### 22、时分秒弹窗
+### 24、时分秒弹窗
 
 ```typescript
 showDialogTime({
@@ -610,7 +602,7 @@ showDialogTime({
 })
 ```
 
-### 23、城市地址弹窗
+### 25、城市地址弹窗
 
 ```typescript
  showDialogAddress({
@@ -622,7 +614,7 @@ showDialogTime({
 })
 ```
 
-### 24、PopupWindow弹出
+### 26、PopupWindow弹出
 
 首先要定义弹出的组件，自定义即可，支持自定义组件形式，传入即可
 

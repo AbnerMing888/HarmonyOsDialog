@@ -187,7 +187,11 @@ struct WindowPage {
         })
         break;
       case 10: //自定义页面
-        showCustomDialogPage("pages/TestPage")
+        showCustomDialogPage("pages/TestPage", {
+          dialogAttribute: {
+            isPrivacyMode: true,
+          }
+        })
         break;
       case 11: //toast提示
         showToast("我是一个普通的toast")
@@ -253,6 +257,7 @@ struct WindowPage {
           },
           timeAttribute: {
             timeType: TimeDialogType.YMDHMS,
+            // selectTime: "1992-7-23-8-8-8"//选择的时间
           },
           timeConfirmClick: (date) => {
             //时间回调
@@ -267,10 +272,11 @@ struct WindowPage {
       case 20: //年月日时分 时间弹窗
         showTimeDialog({
           titleBarAttribute: {
-            titleText: "年月日时分-弹窗",
+            titleText: "年月日时分-弹窗"
           },
           timeAttribute: {
-            timeType: TimeDialogType.YMDHM
+            timeType: TimeDialogType.YMDHM,
+            // selectTime: "1992-7-23-8-8-8"//选择的时间
           },
           timeConfirmClick: (date) => {
             //时间回调
@@ -288,11 +294,13 @@ struct WindowPage {
             titleText: "年月日-弹窗",
           },
           timeAttribute: {
-            startTime: "2022-6-12",
+            startTime: "1980-6-12",
             endTime: "2025-8-20",
+            // selectTime: "1992-7-23"//选择的时间
           },
           timeConfirmClick: (date) => {
             //时间回调
+            console.log("===时间结果：" + date)
           },
           confirmClick: (value, index) => {
             //内容和索引回调
@@ -305,10 +313,12 @@ struct WindowPage {
             titleText: "月日-弹窗",
           },
           timeAttribute: {
-            timeType: TimeDialogType.MD
+            timeType: TimeDialogType.MD,
+            selectTime: "7-23"//选择的时间
           },
           timeConfirmClick: (date) => {
             //时间回调
+            console.log("===时间结果：" + date)
           },
           confirmClick: (value, index) => {
             //内容和索引回调
@@ -358,10 +368,11 @@ struct WindowPage {
           },
           timeAttribute: {
             timeType: TimeDialogType.DHM,
-            isAAay: true
+            // isAAay: true
           },
           timeConfirmClick: (date) => {
             //时间回调
+            console.log("============" + JSON.stringify(date))
           },
           confirmClick: (value, index) => {
             //内容和索引回调

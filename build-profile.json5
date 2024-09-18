@@ -1,6 +1,7 @@
 {
   "app": {
     "signingConfigs": [
+
     ],
     "products": [
       {
@@ -31,6 +32,10 @@
           ]
         }
       ]
+    },
+    {
+      "name": "dialog",
+      "srcPath": "./dialog",
     }
   ]
 }

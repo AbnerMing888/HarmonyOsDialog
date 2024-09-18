@@ -1,4 +1,4 @@
-import { PopupDirection, showPopupWindow } from '@abner/dialog'
+import { PopupDirection, showPopupWindow, hide } from '@abner/dialog'
 
 
 /**
@@ -129,6 +129,9 @@ struct PopupWrapPage {
 function BuilderWindowView() {
   Text("我是任意的组件")
     .backgroundColor(Color.Pink)
+    .onClick(() => {
+      hide()
+    })
 }
 
 /**

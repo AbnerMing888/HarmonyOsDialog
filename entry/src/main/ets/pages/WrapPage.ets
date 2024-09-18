@@ -1,9 +1,11 @@
 import { GridView } from '@abner/refresh'
 import {
+  BottomAnimationView,
   BottomGridModel,
   BottomListModel,
   hide,
   loading,
+  setDialogAttribute,
   showDialog,
   showDialogAddress,
   showDialogBottomGrid,
@@ -13,6 +15,7 @@ import {
   showDialogInfo,
   showDialogParams,
   showDialogTime,
+  showToast,
   TimeDialogType,
   toast
 } from '@abner/dialog'
@@ -28,6 +31,8 @@ function BuilderDialog() {
   Column() {
     Text("我是一个自定义弹窗")
       .margin({ top: 30 })
+
+    TextInput()
     Row() {
       Button("取消").onClick(() => {
         //隐藏dialog
@@ -52,20 +57,23 @@ class DialogParams {
 
 @Builder
 function BuilderDialogParams(params: DialogParams) {
-  Column() {
-    Text(params.title)
+  BottomAnimationView() {
+    Column() {
+      Text(params.title)
+        .margin({ top: 30 })
+      Row() {
+        Button("取消").onClick(() => {
+          //隐藏dialog
+          hide()
+        })
+        Button("确定")
+          .margin({ left: 30 })
+      }.margin({ top: 20 })
       .margin({ top: 30 })
-    Row() {
-      Button("取消").onClick(() => {
-        //隐藏dialog
-        hide()
-      })
-      Button("确定")
-        .margin({ left: 30 })
-    }.margin({ top: 20 })
-    .margin({ top: 30 })
-  }.backgroundColor(Color.White)
-  .width("60%")
+    }.backgroundColor(Color.White)
+    .width("60%")
+  }
+
 }
 
 
@@ -222,7 +230,10 @@ struct WrapPage {
       case 9: //自定义弹窗带参数
         let params = new DialogParams()
         params.title = "我是传递的参数"
-        showDialogParams(wrapBuilder(BuilderDialogParams), params)
+        setDialogAttribute({
+          isSystemAnimation: false,
+          windowAlignment: DialogAlignment.Bottom
+        }).showDialogParams(wrapBuilder(BuilderDialogParams), params)
         break;
       case 10: //toast提示
         toast("我是一个普通的toast")
@@ -276,6 +287,9 @@ struct WrapPage {
           titleBarAttribute: {
             titleText: "底部三列表联动",
           },
+          dialogAttribute: {
+            isSystemAnimation: false
+          },
           confirmClick: (value, index) => {
             console.log(value + "=========" + index)
           }
@@ -288,6 +302,7 @@ struct WrapPage {
           },
           timeAttribute: {
             timeType: TimeDialogType.YMDHMS,
+            // selectTime: "1992-7-23-8-8-8"//选择的时间
           },
           timeConfirmClick: (date) => {
             //时间回调
@@ -305,7 +320,8 @@ struct WrapPage {
             titleText: "年月日时分-弹窗",
           },
           timeAttribute: {
-            timeType: TimeDialogType.YMDHM
+            timeType: TimeDialogType.YMDHM,
+            // selectTime: "1992-7-23-8-8"//选择的时间
           },
           timeConfirmClick: (date) => {
             //时间回调
@@ -323,11 +339,13 @@ struct WrapPage {
             titleText: "年月日-弹窗",
           },
           timeAttribute: {
-            startTime: "2022-6-12",
+            startTime: "1990-6-12",
             endTime: "2025-8-20",
+            // selectTime: "1992-7-23"//选择的时间
           },
           timeConfirmClick: (date) => {
             //时间回调
+            console.log("===时间结果：" + date)
           },
           confirmClick: (value, index) => {
             //内容和索引回调
@@ -340,10 +358,12 @@ struct WrapPage {
             titleText: "月日-弹窗",
           },
           timeAttribute: {
-            timeType: TimeDialogType.MD
+            timeType: TimeDialogType.MD,
+            // selectTime: "7-23"//选择的时间
           },
           timeConfirmClick: (date) => {
             //时间回调
+            console.log("===时间结果：" + date)
           },
           confirmClick: (value, index) => {
             //内容和索引回调
@@ -357,9 +377,11 @@ struct WrapPage {
           },
           timeAttribute: {
             timeType: TimeDialogType.HMS,
+            selectTime: "12-12-12"//选择的时间
           },
           timeConfirmClick: (date) => {
             //时间回调
+            console.log("===时间结果：" + date)
           },
           confirmClick: (value, index) => {
             //内容和索引回调
@@ -380,6 +402,7 @@ struct WrapPage {
           },
           timeConfirmClick: (date) => {
             //时间回调
+            console.log("===时间结果：" + date)
           },
           confirmClick: (value, index) => {
             //内容和索引回调
