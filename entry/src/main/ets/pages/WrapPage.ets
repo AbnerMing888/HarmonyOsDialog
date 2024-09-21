@@ -13,9 +13,7 @@ import {
   showDialogBottomListScroll,
   showDialogConfirm,
   showDialogInfo,
-  showDialogParams,
   showDialogTime,
-  showToast,
   TimeDialogType,
   toast
 } from '@abner/dialog'
@@ -183,6 +181,9 @@ struct WrapPage {
 
       case 5: //底部列表多样式
         showDialogBottomList({
+          dialogAttribute: {
+            isSystemAnimation: false
+          },
           itemModels: [new BottomListModel("条目一", { fontColor: Color.Red }), new BottomListModel("条目二")],
           itemClick: (position: number) => {
             hide()
@@ -234,6 +235,7 @@ struct WrapPage {
           isSystemAnimation: false,
           windowAlignment: DialogAlignment.Bottom
         }).showDialogParams(wrapBuilder(BuilderDialogParams), params)
+
         break;
       case 10: //toast提示
         toast("我是一个普通的toast")
@@ -339,9 +341,10 @@ struct WrapPage {
             titleText: "年月日-弹窗",
           },
           timeAttribute: {
-            startTime: "1990-6-12",
-            endTime: "2025-8-20",
-            // selectTime: "1992-7-23"//选择的时间
+            isNoLinkage: true,
+            startTime: "1990-1-1",
+            endTime: "2025-12-31",
+            selectTime: "1992-8-23"//选择的时间
           },
           timeConfirmClick: (date) => {
             //时间回调
