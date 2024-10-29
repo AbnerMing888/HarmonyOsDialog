@@ -5,4 +5,8 @@ export default class App extends AbilityStage {
     //dialog初始化
 
   }
+
+  onDestroy(): void {
+
+  }
 }

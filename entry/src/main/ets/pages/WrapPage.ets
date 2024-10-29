@@ -110,7 +110,6 @@ struct WrapPage {
           message: "我是一段描述",
           clickConfirm: () => {
             //确认
-            console.log("===确认")
           }
         })
         break;
@@ -159,6 +158,12 @@ struct WrapPage {
       case 3: //底部列表
         showDialogBottomList({
           items: ["我是条目一", "我是条目二"],
+          dialogAttribute: {
+            isSystemAnimation: false//取消系统的动画
+          },
+          cancelAttr: {
+            paddingBottom: 20
+          },
           itemClick: (position: number) => {
             console.log("==========:" + position)
           }
@@ -233,7 +238,9 @@ struct WrapPage {
         params.title = "我是传递的参数"
         setDialogAttribute({
           isSystemAnimation: false,
-          windowAlignment: DialogAlignment.Bottom
+          windowAlignment: DialogAlignment.Bottom,
+          dialogDismiss: () => {
+          }
         }).showDialogParams(wrapBuilder(BuilderDialogParams), params)
 
         break;
@@ -245,6 +252,7 @@ struct WrapPage {
         break;
       case 12: //toast改变位置
         toast("我是一个改变位置的Toast", { alignment: DialogAlignment.Center })
+        toast("我是一个改变位置的Toast22", { alignment: DialogAlignment.Center })
         break;
       case 13: //toast图片设置
         toast("Toast设置Icon", { leftSrc: $r("app.media.app_icon") })
@@ -440,13 +448,18 @@ struct WrapPage {
         })
         break;
       case 26: //加载视图
-        loading()
+        this.showLoading()
         break;
       case 27: //Popup浮窗
         router.pushUrl({ url: "pages/PopupWrapPage" })
         break;
     }
 
+  }
+
+  private async showLoading() {
+    await loading({ dialogAttribute: { windowClickOutsideHide: false } })
+    hide()
   }
 
   private doubleList: TextCascadePickerRangeContent[] = [

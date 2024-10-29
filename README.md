@@ -17,9 +17,9 @@ HarmonyOsDialog是一个便捷的弹窗，**一行代码便可以搞定**，**�
 
 ## 开发环境
 
-DevEco Studio NEXT Developer Beta1,Build Version: 5.0.3.706
+DevEco Studio NEXT Developer Beta1,Build Version: 5.0.3.900
 
-Api版本：**11**
+Api版本：**12**
 
 modelVersion：5.0.0
 
@@ -64,7 +64,7 @@ ohpm install @abner/dialog
 方式二：在工程的oh-package.json5中设置三方包依赖，配置示例如下：
 
 ```
-"dependencies": { "@abner/dialog": "^1.0.7"}
+"dependencies": { "@abner/dialog": "^1.0.9"}
 ```
 
 <p align="center"><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_01.png" width="300"></p>
@@ -743,25 +743,6 @@ showPopupWindow({
 
 [鸿蒙精华技术文章列表](https://juejin.cn/column/7269566781248389178)
 
-## 一对一指导【收费】
-
-每个人的时间都是宝贵的，做为开发者的我，已经做到了技术上的免费开源，但仍然有很多问题无法做到及时处理。
-也考虑到，鸿蒙是一个新的系统，大家在使用上会遇到各种各样的问题，也为了能够及时的解决及回复问题，大家可以付费进行一对一指导。
-
-### 开源库使用指导
-
-<p><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/h_github_9.png" width="150px" /></p>
-
-**重要信息：一定要在付款时备注您的微信号，我会主动加您！切记！切记！！切记！！！**
-**诚信经营，来自一个北漂的老程序员心声！**
-
-**一杯饮料的钱，您可以获取权益如下**
-
-- 1、针对dialog库使用1对1辅导使用，并跟踪相关问题排查。
-- 2、针对我的所有鸿蒙开源库，1对1辅导使用，并跟踪相关问题排查。
-- 3、涉及到我的开源库，您提的业务需求，率先第一时间满足，并及时针对性开发。
-- 4、未来我的鸿蒙开源库，可先遣体验。
-- 5、鸿蒙脚手架，正在研发中，可首批次体验使用。
 
 ## License
 
