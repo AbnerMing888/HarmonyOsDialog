@@ -6,7 +6,6 @@ import {
   hide,
   loading,
   setDialogAttribute,
-  showDialog,
   showDialogAddress,
   showDialogBottomGrid,
   showDialogBottomList,
@@ -26,22 +25,25 @@ import router from '@ohos.router'
 */
 @Builder
 function BuilderDialog() {
-  Column() {
-    Text("我是一个自定义弹窗")
-      .margin({ top: 30 })
+  BottomAnimationView() {
+    Column() {
+      Text("我是一个自定义弹窗")
+        .margin({ top: 30 })
 
-    TextInput()
-    Row() {
-      Button("取消").onClick(() => {
-        //隐藏dialog
-        hide()
-      })
-      Button("确定")
-        .margin({ left: 30 })
-    }.margin({ top: 20 })
-    .margin({ top: 30 })
-  }.backgroundColor(Color.White)
-  .width("60%")
+      TextInput()
+      Row() {
+        Button("取消").onClick(() => {
+          //隐藏dialog
+          hide()
+        })
+        Button("确定")
+          .margin({ left: 30 })
+      }.margin({ top: 20 })
+      .margin({ top: 30 })
+    }.backgroundColor(Color.White)
+    .width("60%")
+  }
+
 }
 
 /*
@@ -179,7 +181,8 @@ struct WrapPage {
           isTransparent: true,
           dialogAttribute: {
             dialogMarginLeft: 20,
-            dialogMarginRight: 20
+            dialogMarginRight: 20,
+            isSystemAnimation: false//取消系统的动画
           }
         })
         break;
@@ -198,6 +201,9 @@ struct WrapPage {
       case 6: //底部网格列表
         showDialogBottomGrid({
           columnSize: 4,
+          dialogAttribute: {
+            isSystemAnimation: false//取消系统的动画
+          },
           items: [new BottomGridModel("微信", $r("app.media.app_icon")),
             new BottomGridModel("朋友圈", $r("app.media.app_icon")),
             new BottomGridModel("QQ", $r("app.media.app_icon")),
@@ -217,6 +223,9 @@ struct WrapPage {
           columnSize: 4,
           isShowBottomCancel: true,
           isHideBar: true,
+          dialogAttribute: {
+            isSystemAnimation: false//取消系统的动画
+          },
           itemLineArray: [
             [new BottomGridModel("测试", $r("app.media.app_icon")),
               new BottomGridModel("测试", $r("app.media.app_icon"))],
@@ -231,7 +240,13 @@ struct WrapPage {
 
         break;
       case 8: //自定义弹窗
-        showDialog(wrapBuilder(BuilderDialog))
+        setDialogAttribute({
+          isSystemAnimation: false,
+          windowAlignment: DialogAlignment.Bottom,
+          dialogDismiss: () => {
+            hide()
+          }
+        }).showDialog(wrapBuilder(BuilderDialog))
         break;
       case 9: //自定义弹窗带参数
         let params = new DialogParams()
@@ -240,6 +255,7 @@ struct WrapPage {
           isSystemAnimation: false,
           windowAlignment: DialogAlignment.Bottom,
           dialogDismiss: () => {
+            hide()
           }
         }).showDialogParams(wrapBuilder(BuilderDialogParams), params)
 
@@ -349,7 +365,7 @@ struct WrapPage {
             titleText: "年月日-弹窗",
           },
           timeAttribute: {
-            isNoLinkage: true,
+            isNoLinkage: true,//不联动
             startTime: "1990-1-1",
             endTime: "2025-12-31",
             selectTime: "1992-8-23"//选择的时间
@@ -360,6 +376,7 @@ struct WrapPage {
           },
           confirmClick: (value, index) => {
             //内容和索引回调
+            console.log("===内容结果：" + value + "====" + index)
           }
         })
         break;
@@ -448,7 +465,7 @@ struct WrapPage {
         })
         break;
       case 26: //加载视图
-        this.showLoading()
+        loading({ dialogAttribute: { windowClickOutsideHide: false } })
         break;
       case 27: //Popup浮窗
         router.pushUrl({ url: "pages/PopupWrapPage" })
@@ -457,10 +474,6 @@ struct WrapPage {
 
   }
 
-  private async showLoading() {
-    await loading({ dialogAttribute: { windowClickOutsideHide: false } })
-    hide()
-  }
 
   private doubleList: TextCascadePickerRangeContent[] = [
     {

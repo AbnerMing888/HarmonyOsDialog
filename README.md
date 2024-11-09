@@ -64,7 +64,7 @@ ohpm install @abner/dialog
 方式二：在工程的oh-package.json5中设置三方包依赖，配置示例如下：
 
 ```
-"dependencies": { "@abner/dialog": "^1.0.9"}
+"dependencies": { "@abner/dialog": "^1.1.0"}
 ```
 
 <p align="center"><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_01.png" width="300"></p>
@@ -99,16 +99,15 @@ initDialog(attribute)
 FusionAttribute是全局的dialog属性配置，如果默认提供的dialog样式和您的项目中样式不一样，可通过此参数进行设置，全局配置一次
 页面中的所有使用地方均会生效，方便您后续使用。
 
-| 属性                        | 类型                        | 概述                  |
-|---------------------------|---------------------------|---------------------|
-| infoOrConfirmAttribute    | ContentAttribute          | 可选参数，信息或者确认形式弹窗属性配置 |
-| bottomListAttribute       | BottomListAttribute       | 可选参数，底部列表弹窗属性配置     |
-| bottomGridAttribute       | BottomGridAttribute       | 可选参数，底部网格列表弹窗属性配置   |
-| bottomListScrollAttribute | BottomListScrollAttribute | 可选参数，底部的滑动列表属性      |
-| toastAttribute            | ToastAttribute            | 可选参数，Toast属性配置      |
-| loadingAttribute          | LoadingAttribute          | 可选参数，loading提示      |
+| 属性                        | 类型                        | 概述                       |
+|---------------------------|---------------------------|--------------------------|
+| infoOrConfirmAttribute    | ContentAttribute          | 可选参数，信息或者确认形式弹窗属性配置      |
+| bottomListAttribute       | BottomListAttribute       | 可选参数，底部列表弹窗属性配置          |
+| bottomGridAttribute       | BottomGridAttribute       | 可选参数，底部网格列表弹窗属性配置        |
+| bottomListScrollAttribute | BottomListScrollAttribute | 可选参数，底部的滑动列表属性           |
+| toastAttribute            | ToastAttribute            | 可选参数，Toast属性配置           |
+| loadingAttribute          | LoadingAttribute          | 可选参数，loading提示           |
 | isUseMainWindow           | boolean                   | 是使用主window还是子window,默认是子 |
-
 
 ##### ContentAttribute属性
 
@@ -208,6 +207,19 @@ BottomListAttribute是底部列表弹窗属性配置。
 | imageHeight     | Length                                     | 图片高度           |
 | imageAlt        | string /Resource                           | 加载时显示的占位图      |
 
+##### DialogAttribute属性
+
+每个弹窗中都有一个dialogAttribute属性，用来控制整体的弹窗样式。
+
+
+| 属性                    | 类型                                    | 概述           |
+|-----------------------|---------------------------------------|--------------|
+| windowAlignment       | DialogAlignment                       | 弹窗位置         |
+| dialogDismiss         | (action?:DismissDialogAction) => void | dialog隐藏状态回调 |
+| dialogAppear          | () => void                            | dialog显示回调   |
+| windowBottomAnimation | boolean                               | 是否开启底部动画     |
+| isPrivacyMode         | boolean                               | 是否防止截屏，默认不是  |
+| isSystemAnimation     | boolean                               | 是否系统动画，默认既是  |
 
 
 ### 2、信息弹窗
@@ -219,6 +231,7 @@ showDialogInfo({
   clickConfirm: () => {
     //确认
     console.log("===确认")
+    // hide() //隐藏
   }
 })
 ```
@@ -232,10 +245,12 @@ showDialogConfirm({
   clickCancel: () => {
     //取消
     console.log("===取消")
+    // hide() //隐藏
   },
   clickConfirm: () => {
     //确认
     console.log("===确认")
+    // hide() //隐藏
   }
 })
 ```
@@ -243,10 +258,10 @@ showDialogConfirm({
 ### 3、底部列表
 
 ```typescript
-showBottomListDialog({
+ showDialogBottomList({
   items: ["我是条目一", "我是条目二"],
   itemClick: (position: number) => {
-    hideDialog()
+    console.log("==========:" + position)
   }
 })
 ```
@@ -271,6 +286,7 @@ showDialogConfirm({
           },
           clickCancel: () => {
             //取消
+            //hide()
             console.log("===取消")
           },
           clickConfirm: () => {
@@ -307,7 +323,7 @@ showDialogBottomList({
 })
 ```
 
-### 7、底部列表多样式
+### 6、底部列表多样式
 
 ```typescript
  showDialogBottomList({
@@ -318,7 +334,7 @@ showDialogBottomList({
 })
 ```
 
-### 8、底部网格列表
+### 7、底部网格列表
 ```typescript
 showDialogBottomGrid({
   columnSize: 4,
@@ -336,7 +352,7 @@ showDialogBottomGrid({
   }
 })
 ```
-### 9、底部网格按行区分
+### 8、底部网格按行区分
 ```typescript
 showDialogBottomGrid({
   columnSize: 4,
@@ -354,7 +370,7 @@ showDialogBottomGrid({
   }
 })
 ```
-### 10、自定义组件弹窗
+### 9、自定义组件弹窗
 
 首先要自定义一个**全局组件**,可传入自定义的组件，或者直接写布局
 
@@ -389,7 +405,7 @@ function BuilderDialog() {
 ```
 
 
-### 11、自定义组件弹窗带参数
+### 10、自定义组件弹窗带参数
 
 首先要自定义一个**全局组件**,可传入自定义的组件，或者直接写布局
 
@@ -427,25 +443,25 @@ params.title = "我是传递的参数"
 showDialogParams(wrapBuilder(BuilderDialogParams), params)
 ```
 
-### 12、toast提示
+### 11、toast提示
 ```typescript
   toast("我是一个普通的toast")
 ```
-### 13、toast改变背景
+### 12、toast改变背景
 ```typescript
   toast("我是一个改变背景的Toast", { backgroundColor: Color.Red })
 ```
-### 14、toast改变位置
+### 13、toast改变位置
 ```typescript
    toast("我是一个改变位置的Toast", { alignment: DialogAlignment.Center })
 ```
-### 15、toast图片设置
+### 14、toast图片设置
 
 ```typescript
      toast("Toast设置Icon", { leftSrc: $r("app.media.app_icon") })
 ```
 
-### 16、底部单列表
+### 15、底部单列表
 
 ```typescript
   showDialogBottomListScroll({
@@ -459,7 +475,7 @@ showDialogParams(wrapBuilder(BuilderDialogParams), params)
 })
 ```
 
-### 17、底部双列表不联动
+### 16、底部双列表不联动
 
 ```typescript
 showDialogBottomListScroll({
@@ -474,7 +490,7 @@ showDialogBottomListScroll({
 })
 ```
 
-### 18、底部双列表联动
+### 17、底部双列表联动
 
 ```typescript
 showDialogBottomListScroll({
@@ -488,7 +504,7 @@ showDialogBottomListScroll({
         })
 ```
 
-### 19、底部三列表联动
+### 18、底部三列表联动
 
 ```typescript
  showDialogBottomListScroll({
@@ -502,7 +518,7 @@ showDialogBottomListScroll({
         })
 ```
 
-### 20、年月日时分秒时间弹窗
+### 19、年月日时分秒时间弹窗
 
 ```typescript
 showDialogTime({
@@ -522,7 +538,7 @@ showDialogTime({
   }
 })
 ```
-### 21、年月日时分弹窗
+### 20、年月日时分弹窗
 
 ```typescript
 showDialogTime({
@@ -543,7 +559,7 @@ showDialogTime({
 })
 ```
 
-### 22、年月日弹窗
+### 21、年月日弹窗
 
 ```typescript
 showDialogTime({
@@ -563,7 +579,7 @@ showDialogTime({
 })
 ```
 
-### 23、月日弹窗
+### 22、月日弹窗
 
 ```typescript
 showDialogTime({
@@ -583,7 +599,7 @@ showDialogTime({
 
 ```
 
-### 24、时分秒弹窗
+### 22、时分秒弹窗
 
 ```typescript
 showDialogTime({
@@ -602,7 +618,7 @@ showDialogTime({
 })
 ```
 
-### 25、城市地址弹窗
+### 23、城市地址弹窗
 
 ```typescript
  showDialogAddress({
@@ -614,7 +630,7 @@ showDialogTime({
 })
 ```
 
-### 26、PopupWindow弹出
+### 24、PopupWindow弹出
 
 首先要定义弹出的组件，自定义即可，支持自定义组件形式，传入即可
 
@@ -719,7 +735,7 @@ function BuilderWindowParams(params: WindowParams) {
 }
 
 //代码调用
-let params = new WindowParams()
+ let params = new WindowParams()
 params.title = "我是携带的参数"
 showPopupWindow({
   id: "popupParams",
@@ -729,20 +745,15 @@ showPopupWindow({
 })
 ```
 
-
 ## 更多案例
 
-可以查看相关Demo。
+可以查看相关Demo【右侧仓库地址】。
 
-## 关注公众号
+## 咨询作者
 
-鸿蒙先驱者，只分享精华的鸿蒙或者移动端技术文章，可微信扫码关注
+如果您在使用上有问题，解决不了，或者查看精华的鸿蒙技术文章，可扫码进行操作。
 
-<p><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/abner.jpg" width="150px" /></p>
-
-
-[鸿蒙精华技术文章列表](https://juejin.cn/column/7269566781248389178)
-
+<p><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/abner.jpg" width="150"></p>
 
 ## License
 
