@@ -1,8 +1,11 @@
 import router from '@ohos.router'
+import promptAction from '@ohos.promptAction'
 
 @Entry
 @Component
 struct Index {
+  private customDialogComponentId: number = 0
+
   build() {
     Column() {
 
@@ -17,11 +20,25 @@ struct Index {
         .onClick(() => {
           router.pushUrl({ url: "pages/WrapPage" })
         })
-
     }
     .width("100%")
     .height("100%")
     .justifyContent(FlexAlign.Center)
+  }
+
+  @Builder
+  customDialogComponent() {
+    Column() {
+      Text('弹窗').fontSize(30)
+      Row({ space: 50 }) {
+        Button("确认").onClick(() => {
+          promptAction.closeCustomDialog(this.customDialogComponentId)
+        })
+        Button("取消").onClick(() => {
+          promptAction.closeCustomDialog(this.customDialogComponentId)
+        })
+      }
+    }.height(200).padding(5).justifyContent(FlexAlign.SpaceBetween)
   }
 }
 

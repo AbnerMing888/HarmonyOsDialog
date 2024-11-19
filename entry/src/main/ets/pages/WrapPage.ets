@@ -252,11 +252,8 @@ struct WrapPage {
         let params = new DialogParams()
         params.title = "我是传递的参数"
         setDialogAttribute({
-          isSystemAnimation: false,
+          isSystemAnimation: false, //不是系统动画
           windowAlignment: DialogAlignment.Bottom,
-          dialogDismiss: () => {
-            hide()
-          }
         }).showDialogParams(wrapBuilder(BuilderDialogParams), params)
 
         break;
@@ -365,7 +362,7 @@ struct WrapPage {
             titleText: "年月日-弹窗",
           },
           timeAttribute: {
-            isNoLinkage: true,//不联动
+            isNoLinkage: true, //不联动
             startTime: "1990-1-1",
             endTime: "2025-12-31",
             selectTime: "1992-8-23"//选择的时间
@@ -466,6 +463,9 @@ struct WrapPage {
         break;
       case 26: //加载视图
         loading({ dialogAttribute: { windowClickOutsideHide: false } })
+        setTimeout(() => {
+          hide()
+        }, 3000)
         break;
       case 27: //Popup浮窗
         router.pushUrl({ url: "pages/PopupWrapPage" })
@@ -473,7 +473,6 @@ struct WrapPage {
     }
 
   }
-
 
   private doubleList: TextCascadePickerRangeContent[] = [
     {
