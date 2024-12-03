@@ -17,6 +17,7 @@ import {
   toast
 } from '@abner/dialog'
 import router from '@ohos.router'
+import promptAction from '@ohos.promptAction'
 
 
 /*
@@ -264,8 +265,8 @@ struct WrapPage {
         toast("我是一个改变背景的Toast", { backgroundColor: Color.Red })
         break;
       case 12: //toast改变位置
-        toast("我是一个改变位置的Toast", { alignment: DialogAlignment.Center })
-        toast("我是一个改变位置的Toast22", { alignment: DialogAlignment.Center })
+        toast("我是一个改变位置的Toast", { alignment: DialogAlignment.Center, isRepeat: true })
+        toast("我是一个改变位置的Toast22", { alignment: DialogAlignment.Center, isRepeat: true })
         break;
       case 13: //toast图片设置
         toast("Toast设置Icon", { leftSrc: $r("app.media.app_icon") })
@@ -458,6 +459,7 @@ struct WrapPage {
             titleText: "城市地址弹窗",
           },
           confirmClick: (value, index) => {
+            console.log("===============" + (value as string)[1])
           }
         })
         break;
