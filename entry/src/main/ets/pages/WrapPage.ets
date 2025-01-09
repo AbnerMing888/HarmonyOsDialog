@@ -4,6 +4,7 @@ import {
   BottomGridModel,
   BottomListModel,
   hide,
+  hideDialogId,
   loading,
   setDialogAttribute,
   showDialogAddress,
@@ -65,7 +66,7 @@ function BuilderDialogParams(params: DialogParams) {
       Row() {
         Button("取消").onClick(() => {
           //隐藏dialog
-          hide()
+          hideDialogId("dialog_id")
         })
         Button("确定")
           .margin({ left: 30 })
@@ -85,7 +86,7 @@ struct WrapPage {
     "底部网格行元素", "自定义弹窗", "自定义弹窗(传数据)", "toast提示", "toast改变背景", "toast改变位置",
     "Toast设置Icon", "底部单列表", "底部双列表", "底部双列表联动", "底部三列表联动", "年月日时分秒弹窗",
     "年月日时分弹窗", "年月日弹窗", "月日弹窗",
-    "时分秒弹窗", "时分弹窗", "日时分弹窗", "城市地址弹窗", "加载视图", "Popup自定义浮窗"]
+    "时分秒弹窗", "时分弹窗", "日时分弹窗", "城市地址弹窗", "加载视图", "Popup自定义浮窗", "描述link"]
 
   @Builder
   itemLayout(_this: WrapPage, item: Object, index: number) {
@@ -160,9 +161,12 @@ struct WrapPage {
         break;
       case 3: //底部列表
         showDialogBottomList({
-          items: ["我是条目一", "我是条目二"],
+          items: ["我是条目一", "我是条目二", "我是条目三", "我是条目四"],
           dialogAttribute: {
             isSystemAnimation: false//取消系统的动画
+          },
+          itemDivider: {
+            height: 0.5
           },
           cancelAttr: {
             paddingBottom: 20
@@ -193,9 +197,11 @@ struct WrapPage {
           dialogAttribute: {
             isSystemAnimation: false
           },
-          itemModels: [new BottomListModel("条目一", { fontColor: Color.Red }), new BottomListModel("条目二")],
+          itemModels: [
+            new BottomListModel("条目一", { fontColor: Color.Red }),
+            new BottomListModel("条目二")],
           itemClick: (position: number) => {
-            hide()
+
           }
         })
         break;
@@ -255,18 +261,19 @@ struct WrapPage {
         setDialogAttribute({
           isSystemAnimation: false, //不是系统动画
           windowAlignment: DialogAlignment.Bottom,
+          dialogId: "dialog_id"
         }).showDialogParams(wrapBuilder(BuilderDialogParams), params)
 
         break;
       case 10: //toast提示
-        toast("我是一个普通的toast")
+        toast("我是一个普通的toast我是一个普通的toast我是一个普通的toast我是一个普通的toast")
         break;
       case 11: //toast改变背景
         toast("我是一个改变背景的Toast", { backgroundColor: Color.Red })
         break;
       case 12: //toast改变位置
-        toast("我是一个改变位置的Toast", { alignment: DialogAlignment.Center, isRepeat: true })
-        toast("我是一个改变位置的Toast22", { alignment: DialogAlignment.Center, isRepeat: true })
+        toast("我是一个改变位置的Toast", { alignment: DialogAlignment.Center })
+        toast("我是一个改变位置的Toast22", { alignment: DialogAlignment.Center })
         break;
       case 13: //toast图片设置
         toast("Toast设置Icon", { leftSrc: $r("app.media.app_icon") })
@@ -274,11 +281,13 @@ struct WrapPage {
       case 14: //底部单列表
         showDialogBottomListScroll({
           items: ["男", "女"],
+          selected: 10,
           titleBarAttribute: {
             titleText: "选择性别"
           },
           confirmClick: (value, index) => {
             console.log(value + "=========" + index)
+
           }
         })
         break;
@@ -364,9 +373,9 @@ struct WrapPage {
           },
           timeAttribute: {
             isNoLinkage: true, //不联动
-            startTime: "1990-1-1",
-            endTime: "2025-12-31",
-            selectTime: "1992-8-23"//选择的时间
+            startTime: "2024-12-24",
+            selectTime: "2024-12-24",
+            endTime: "2029-12-31",
           },
           timeConfirmClick: (date) => {
             //时间回调
@@ -411,6 +420,7 @@ struct WrapPage {
           },
           confirmClick: (value, index) => {
             //内容和索引回调
+
           }
         })
         break;
@@ -465,13 +475,27 @@ struct WrapPage {
         break;
       case 26: //加载视图
         loading({ dialogAttribute: { windowClickOutsideHide: false } })
-        setTimeout(() => {
-          hide()
-        }, 3000)
         break;
       case 27: //Popup浮窗
         router.pushUrl({ url: "pages/PopupWrapPage" })
         break;
+      case 28: //描述Link
+        showDialogInfo({
+          title: "我是标题",
+          message: "我是一段描述",
+          messageLink: "我是可以点击的",
+          isShowLink: true,
+          messageLinkAttribute: {
+            fontColor: Color.Blue,
+            onclick: () => {
+              //点击
+            }
+          },
+          clickConfirm: () => {
+            //确认
+          }
+        })
+        break
     }
 
   }

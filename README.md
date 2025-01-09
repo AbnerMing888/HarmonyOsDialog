@@ -64,7 +64,7 @@ ohpm install @abner/dialog
 方式二：在工程的oh-package.json5中设置三方包依赖，配置示例如下：
 
 ```
-"dependencies": { "@abner/dialog": "^1.1.2"}
+"dependencies": { "@abner/dialog": "^1.1.4"}
 ```
 
 <p align="center"><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_01.png" width="300"></p>
@@ -745,9 +745,6 @@ showPopupWindow({
 })
 ```
 
-## 更多案例
-
-可以查看相关Demo【右侧仓库地址】。
 
 ## 咨询作者
 

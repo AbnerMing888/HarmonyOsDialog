@@ -112,7 +112,8 @@ struct PopupWrapPage {
           showPopupWindow({
             view: wrapBuilder(BuilderWindowView),
             x: 60,
-            y: 300
+            y: 300,
+            windowClickOutsideHide: false
           })
         })
     }
@@ -130,6 +131,7 @@ function BuilderWindowView() {
   Text("我是任意的组件")
     .backgroundColor(Color.Pink)
     .onClick(() => {
+      console.log("=================点击了")
       hide()
     })
 }
