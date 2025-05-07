@@ -1,4 +1,4 @@
-import { PopupDirection, showPopupWindow, hide } from '@abner/dialog'
+import { PopupDirection, showPopupWindow, hide, updatePopupData, MessageData } from '@abner/dialog'
 
 
 /**
@@ -9,20 +9,23 @@ import { PopupDirection, showPopupWindow, hide } from '@abner/dialog'
 @Entry
 @Component
 struct PopupWrapPage {
+  private mTimeoutId: number = -1
+
   build() {
     Column() {
       Button("弹出上")
         .id('popupTop')
-        .margin({ top: 80 })
+        .margin({ top: 20 })
         .onClick(() => {
           showPopupWindow({
             id: "popupTop",
             view: wrapBuilder(BuilderWindowView)
           })
+
         })
       Button("弹出下")
         .id('popupBottom')
-        .margin({ top: 30 })
+        .margin({ top: 20 })
         .onClick(() => {
           showPopupWindow({
             id: "popupBottom",
@@ -32,7 +35,7 @@ struct PopupWrapPage {
         })
       Button("弹出左")
         .id('popupLeft')
-        .margin({ top: 30 })
+        .margin({ top: 20 })
         .onClick(() => {
           showPopupWindow({
             id: "popupLeft",
@@ -42,7 +45,7 @@ struct PopupWrapPage {
         })
       Button("弹出右")
         .id('popupRight')
-        .margin({ top: 30 })
+        .margin({ top: 20 })
         .onClick(() => {
           showPopupWindow({
             id: "popupRight",
@@ -53,7 +56,7 @@ struct PopupWrapPage {
 
       Button("弹出左上")
         .id('popupTopLeft')
-        .margin({ top: 30 })
+        .margin({ top: 20 })
         .onClick(() => {
           showPopupWindow({
             id: "popupTopLeft",
@@ -63,7 +66,7 @@ struct PopupWrapPage {
         })
       Button("弹出右上")
         .id('popupTopRight')
-        .margin({ top: 30 })
+        .margin({ top: 20 })
         .onClick(() => {
           showPopupWindow({
             id: "popupTopRight",
@@ -73,7 +76,7 @@ struct PopupWrapPage {
         })
       Button("弹出左下")
         .id('popupBottomLeft')
-        .margin({ top: 30 })
+        .margin({ top: 20 })
         .onClick(() => {
           showPopupWindow({
             id: "popupBottomLeft",
@@ -83,7 +86,7 @@ struct PopupWrapPage {
         })
       Button("弹出右下")
         .id('popupBottomRight')
-        .margin({ top: 30 })
+        .margin({ top: 20 })
         .onClick(() => {
           showPopupWindow({
             id: "popupBottomRight",
@@ -94,7 +97,7 @@ struct PopupWrapPage {
 
       Button("携带参数")
         .id('popupParams')
-        .margin({ top: 30 })
+        .margin({ top: 20 })
         .onClick(() => {
           let params = new WindowParams()
           params.title = "我是携带的参数"
@@ -106,14 +109,33 @@ struct PopupWrapPage {
           })
         })
 
+      Button("更新数据")
+        .id('updateParams')
+        .margin({ top: 20 })
+        .onClick(() => {
+          let params = new WindowParams()
+          params.title = "3秒后，我会更新数据"
+          showPopupWindow({
+            id: "updateParams",
+            params: params,
+            viewParams: wrapBuilder(BuilderWindowParams),
+            direction: PopupDirection.BOTTOM
+          })
+          clearTimeout(this.mTimeoutId)
+          this.mTimeoutId = setTimeout(() => {
+            let params = new WindowParams()
+            params.title = "嘿嘿，我更新了"
+            updatePopupData(params)
+          }, 3000)
+        })
+
       Button("任意位置")
         .margin({ top: 30 })
         .onClick(() => {
           showPopupWindow({
             view: wrapBuilder(BuilderWindowView),
             x: 60,
-            y: 300,
-            windowClickOutsideHide: false
+            y: 300
           })
         })
     }
@@ -146,7 +168,7 @@ class WindowParams {
 }
 
 @Builder
-function BuilderWindowParams(params: WindowParams) {
-  Text(params.title)
+function BuilderWindowParams(params: MessageData) {
+  Text((params.data as WindowParams).title)
     .backgroundColor(Color.Pink)
 }

@@ -1,9 +1,11 @@
+import { initDialog } from '@abner/dialog'
 import { AbilityStage } from '@kit.AbilityKit'
 
 export default class App extends AbilityStage {
   onCreate() {
-    //dialog初始化
-
+    initDialog({
+      isUseMainWindow: false
+    })
   }
 
   onDestroy(): void {

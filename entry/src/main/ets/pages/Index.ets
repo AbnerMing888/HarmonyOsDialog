@@ -9,16 +9,16 @@ struct Index {
   build() {
     Column() {
 
-      Button("window弹窗(需要初始化)")
+      Button("window弹窗(需要初始化,已废弃)")
         .onClick(() => {
-          router.pushUrl({ url: "pages/WindowPage" })
+          router.pushUrl({ url: "pages/window/WindowPage" })
         })
 
       //使用这个，不需要全局初始化
-      Button("自定义弹窗(不需要初始化)")
+      Button("自定义弹窗(不需要初始化，推荐使用)")
         .margin({ top: 10 })
         .onClick(() => {
-          router.pushUrl({ url: "pages/WrapPage" })
+          router.pushUrl({ url: "pages/custom/WrapPage" })
         })
     }
     .width("100%")

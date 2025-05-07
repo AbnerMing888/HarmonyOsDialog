@@ -1,11 +1,19 @@
 {
   "src": [
     "pages/Index",
-    "pages/ADialogPage",
-    "pages/PopupPage",
-    "pages/TestPage",
-    "pages/WindowPage",
-    "pages/WrapPage",
-    "pages/PopupWrapPage"
+    "pages/window/ADialogPage",
+    "pages/window/PopupPage",
+    "pages/window/TestPage",
+    "pages/window/WindowPage",
+    "pages/custom/WrapPage",
+    "pages/custom/PopupWrapPage",
+    "pages/custom/ToastPage",
+    "pages/custom/CustomPage",
+    "pages/custom/ConfirmInfoPage",
+    "pages/custom/BottomListPage",
+    "pages/custom/TimePage",
+    "pages/custom/AddressPage",
+    "pages/custom/LoadingPage",
+    "pages/custom/HideModePage"
   ]
 }
