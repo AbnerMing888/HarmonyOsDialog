@@ -1,5 +1,10 @@
 ## 介绍
 
+<p align="center">
+<img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/abner.jpg" width="100px" /><br/>
+<span style="font-size:12px;color:red;">扫码关注，千帆起航，共筑鸿蒙！</span>
+</p>
+
 HarmonyOSDialog是一个便捷的弹窗，**一行代码便可以搞定**，**无须初始化**，便在任何地方都可以弹出，Dialog中也封装了包含常见的弹窗样式，并且支持自定义组件形式。
 
 目前功能项：
@@ -21,9 +26,9 @@ HarmonyOSDialog是一个便捷的弹窗，**一行代码便可以搞定**，**�
 
 ## 开发环境
 
-DevEco Studio NEXT Developer Beta1,Build Version: 5.0.7.200
+DevEco Studio NEXT Developer Beta1,Build Version: 5.0.11.100
 
-Api版本：**12**
+Api适用版本：**>=12**
 
 modelVersion：5.0.0
 
@@ -120,7 +125,7 @@ ohpm install @abner/dialog
 方式二：在工程的oh-package.json5中设置三方包依赖，配置示例如下：
 
 ```
-"dependencies": { "@abner/dialog": "^1.2.0"}
+"dependencies": { "@abner/dialog": "^1.2.1"}
 ```
 
 <p align="center"><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_01.png" width="300"></p>

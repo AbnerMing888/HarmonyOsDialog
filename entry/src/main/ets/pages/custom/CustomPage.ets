@@ -1,6 +1,7 @@
 import {
   BottomAnimationView,
   hide,
+  hideDialogId,
   setDialogAttribute,
   showDialog,
   showDialogParams,

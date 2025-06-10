@@ -46,6 +46,10 @@ struct BottomListPage {
       case 0: //底部列表
         showDialogBottomList({
           items: ["我是条目一", "我是条目二", "我是条目三", "我是条目四"],
+          itemDivider: {
+            height: 0.5,
+            color:"#e4e5e5"
+          },
           itemClick: (position: number) => {
             console.log("===点击的条目索引:" + position)
           }
