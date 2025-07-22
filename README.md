@@ -9,7 +9,7 @@ HarmonyOSDialog是一个便捷的弹窗，**一行代码便可以搞定**，**�
 
 目前功能项：
 
-**八大功能模块，几乎涵盖各个业务需求，【自定义形式】、【时间弹窗】、【城市选择】、【确认&信息】、【底部列表&网格】、【toast】、【popup形式】、【loading形式】,如果还不能满足，莫慌，支持便捷式自定义，想实现什么你就实现什么！**
+**九大功能模块，几乎涵盖各个业务需求，【自定义形式】、【时间弹窗】、【城市选择】、【确认&信息】、【底部列表&网格】、【toast】、【popup形式】、【loading形式】,【模态页面形式】、如果还不能满足，莫慌，支持便捷式自定义，想实现什么你就实现什么！**
 
 - 1、**支持自定义组件弹窗形式，可实现任意视图弹出**
 - 2、**支持信息弹窗样式**
@@ -21,8 +21,9 @@ HarmonyOSDialog是一个便捷的弹窗，**一行代码便可以搞定**，**�
 - 8、**支持Toast提示，可任意修改属性，可设置图片，支持多方位icon设置**
 - 9、**支持任意位置弹出**
 - 10、**支持PopupWindow弹出，可在组件的任何位置**
-- 11、**以上弹窗均支持动态数据更新**
-- 12、**以上弹窗均支持动态样式更新和全局样式统一选择**
+- 11、**支持模态页面弹出，可在组件的任何位置**
+- 12、**以上弹窗均支持动态数据更新**
+- 13、**以上弹窗均支持动态样式更新和全局样式统一选择**
 
 ## 开发环境
 
@@ -34,10 +35,10 @@ modelVersion：5.0.0
 
 ## 效果
 
-### 所有功能功能模块【八大模块】
+### 所有功能功能模块【九大模块】
 
 <p align="center">
-<img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_254_001.png" width="150px" />
+<img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_722_01.png" width="150px" />
 </p>
 
 ### 确认信息形式【所有样式均可统一设置】
@@ -106,6 +107,11 @@ modelVersion：5.0.0
 <img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_254_032.png" width="150px" />
 </p>
 
+### 模态页面形式
+
+<p align="center">
+<img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_722_02.png" width="150px" />
+</p>
 
 ## 快速使用
 
@@ -125,7 +131,7 @@ ohpm install @abner/dialog
 方式二：在工程的oh-package.json5中设置三方包依赖，配置示例如下：
 
 ```
-"dependencies": { "@abner/dialog": "^1.2.1"}
+"dependencies": { "@abner/dialog": "^1.2.2"}
 ```
 
 <p align="center"><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_01.png" width="300"></p>
@@ -1037,6 +1043,156 @@ hide()
 ```typescript
  hideAll()
 ```
+
+
+### 11、模态页面
+
+#### ①、普通模态页面
+
+声明一个Builder
+
+```typescript
+@Builder
+function sheetView() {
+  Column() {
+    Text("我是一个普通的模态页面")
+      .width("100%")
+      .height(100)
+      .textAlign(TextAlign.Center)
+  }
+}
+```
+
+弹出模态
+
+```typescript
+  showDialogSheet({ layout: wrapBuilder(sheetView) })
+```
+
+#### ②、半模态高度(屏幕一半)
+
+```typescript
+  showDialogSheet({
+  layout: wrapBuilder(sheetView),
+  options: {
+    height: SheetSize.MEDIUM
+  }
+})
+```
+
+#### ③、半模态高度(屏幕高度)
+
+```typescript
+ showDialogSheet({
+  layout: wrapBuilder(sheetView),
+  options: {
+    height: SheetSize.LARGE
+  }
+})
+```
+
+#### ④、半模态高度(自适应内容高度)
+
+```typescript
+showDialogSheet({
+  layout: wrapBuilder(sheetView),
+  options: {
+    height: SheetSize.FIT_CONTENT
+  }
+})
+```
+
+#### ⑤、半模态高度(自定义高度)
+
+```typescript
+showDialogSheet({
+  layout: wrapBuilder(sheetView),
+  options: {
+    height: 300
+  }
+})
+```
+
+#### ⑥、隐藏关闭按钮
+
+```typescript
+showDialogSheet({
+  layout: wrapBuilder(sheetView),
+  options: {
+    showClose: false
+  }
+})
+```
+
+#### ⑦、模态页面更新样式
+
+```typescript
+@Builder
+function changeStyleSheetView(d: SheetData) {
+  Column() {
+    Text(d.title)
+      .width("100%")
+      .height(100)
+      .textAlign(TextAlign.Center)
+    Button("更改样式").onClick(() => {
+      //其他属性不需要
+      updateStyleDialogSheet({
+        options: {
+          backgroundColor: Color.Pink
+        }
+      })
+    })
+    Button("关闭")
+      .margin({ top: 10 })
+      .onClick(() => {
+        closeDialogSheet()
+      })
+  }
+}
+
+export class SheetData {
+  title?: string
+
+  constructor(title?: string) {
+    this.title = title
+  }
+}
+```
+
+```typescript
+ let sheetData = new SheetData("模态页面更新样式")
+let sheetWrap = wrapBuilder(changeStyleSheetView)
+showDialogSheet({
+  layout: sheetWrap,
+  data: sheetData
+})
+```
+
+#### ⑧、模态页面更新数据
+
+```typescript
+ let sheetData1 = new SheetData("模态页面更新数据，3秒后我就会更新")
+        let sheetWrap1 = wrapBuilder(changeStyleSheetView)
+        showDialogSheet({
+          layout: sheetWrap1,
+          data: sheetData1
+        })
+        setTimeout(() => {
+          updateDataDialogSheet(new SheetData("嘿嘿！我更新了~"))
+        }, 3000)
+```
+
+#### ⑨、关闭模态页面
+
+```typescript
+ let sheetData2 = new SheetData("测试关闭模态页面")
+        let sheetWrap2 = wrapBuilder(changeStyleSheetView)
+        showDialogSheet({
+          layout: sheetWrap2,
+          data: sheetData2
+        })
+```
+
 
 ## 咨询作者
 

@@ -1,5 +1,6 @@
 import {
   BottomAnimationView,
+  DialogData,
   hide,
   hideDialogId,
   setDialogAttribute,
@@ -16,7 +17,7 @@ import {
 @Entry
 @Component
 struct CustomPage {
-  private items = ["默认弹出", "自定义底部弹窗", "自定义弹窗带参数", "数据更新"]
+  private items = ["默认弹出", "自定义底部弹窗", "自定义弹窗带参数", "数据更新", "底部动画时数据更新"]
   private mTimeoutId: number = -1
 
   build() {
@@ -60,7 +61,7 @@ struct CustomPage {
         }
         showDialogParams(wrapBuilder(BuilderDialogParams), params)
         break;
-      case 3: //自定义弹窗带参数
+      case 3: //数据更新
         let params1 = new DialogParams()
         params1.title = "我是传递的参数"
         let builder = wrapBuilder(BuilderDialogParams)
@@ -70,6 +71,18 @@ struct CustomPage {
           let params1 = new DialogParams()
           params1.title = "嘿嘿,我数据更新了"
           updateDialogParams(params1)
+        }, 3000)
+        break;
+      case 4: //底部动画时数据更新
+        let params2 = new DialogParams()
+        params2.title = "我是传递的参数"
+        let builder2 = wrapBuilder(BottomBuilderDialogParams)
+        showDialogParams(builder2, params2)
+        clearTimeout(this.mTimeoutId)
+        this.mTimeoutId = setTimeout(() => {
+          let paramsBottom = new DialogParams()
+          paramsBottom.title = "嘿嘿,我数据更新了"
+          updateDialogParams(paramsBottom)
         }, 3000)
         break;
     }
@@ -167,4 +180,32 @@ function BuilderDialogParams(params: DialogParams) {
     .margin({ top: 30 })
   }.backgroundColor(Color.White)
   .width("60%")
+}
+
+@Builder
+function BottomChild(d: DialogData) {
+  Column() {
+    Text((d.data as DialogParams).title)
+      .margin({ top: 30 })
+
+    Row() {
+      Button("取消").onClick(() => {
+        //隐藏dialog
+        hide()
+      })
+      Button("确定")
+        .margin({ left: 30 })
+
+    }.margin({ top: 20 })
+    .margin({ top: 30 })
+  }.backgroundColor(Color.White)
+  .width("60%")
+}
+
+@Builder
+function BottomBuilderDialogParams(params: DialogParams) {
+  BottomAnimationView({
+    params: params,
+    layoutChild: wrapBuilder(BottomChild)
+  })
 }

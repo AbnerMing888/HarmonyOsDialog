@@ -44,6 +44,10 @@
           ]
         }
       ]
+    },
+    {
+      "name": "dialog",
+      "srcPath": "./dialog"
     }
   ]
 }

@@ -10,10 +10,10 @@ import router from '@ohos.router'
 struct WrapPage {
   private items =
     ["确认信息形式", "底部列表形式", "时间选择弹窗", "城市地址选择", "Toast提示", "Popup自定义浮窗", "loading加载视图",
-      "自定义视图","隐藏模式"]
+      "自定义视图", "隐藏模式", "模态页面"]
   private itemUrls =
     ["ConfirmInfoPage", "BottomListPage", "TimePage", "AddressPage", "ToastPage", "PopupWrapPage", "LoadingPage",
-      "CustomPage","HideModePage"]
+      "CustomPage", "HideModePage", "SheetPage"]
 
   build() {
     Column() {

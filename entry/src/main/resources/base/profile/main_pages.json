@@ -14,6 +14,7 @@
     "pages/custom/TimePage",
     "pages/custom/AddressPage",
     "pages/custom/LoadingPage",
-    "pages/custom/HideModePage"
+    "pages/custom/HideModePage",
+    "pages/custom/SheetPage"
   ]
 }
