@@ -7,11 +7,11 @@
         "material": {
           "certpath": "C:\\Users\\GW00261583\\.ohos\\config\\default_HarmonyOsDialog_g_0_d7mjgibQHMymkkeunMhehm0Mk18ck3QsEWRlTNU=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B89F0CF099E6B8AB6CB23ED1E835BAB090610BAD40501926D35DBB52F1199ABEECFFD5EB63E65F5",
+          "keyPassword": "0000001B837B0EDBAF46069D83BBE0DBC1FFE4777D163E9DC48C4694896C08ED0C94464BC8AC2B2718D63C",
           "profile": "C:\\Users\\GW00261583\\.ohos\\config\\default_HarmonyOsDialog_g_0_d7mjgibQHMymkkeunMhehm0Mk18ck3QsEWRlTNU=.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "C:\\Users\\GW00261583\\.ohos\\config\\default_HarmonyOsDialog_g_0_d7mjgibQHMymkkeunMhehm0Mk18ck3QsEWRlTNU=.p12",
-          "storePassword": "0000001BE746AB35A2767F6F58D30544664BCA5C9ED7B226DBA96337D042807DAB6E097890A39980264A1F"
+          "storePassword": "0000001B3CD48F55413189A87A4405E895F34AB20D623EA1CA7E5DB07E8604D0FC71B215E97A7A39E0E196"
         }
       }
     ],

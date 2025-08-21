@@ -27,7 +27,7 @@ HarmonyOSDialog是一个便捷的弹窗，**一行代码便可以搞定**，**�
 
 ## 开发环境
 
-DevEco Studio NEXT Developer Beta1,Build Version: 5.0.11.100
+DevEco Studio NEXT Developer Beta1,Build Version: 5.1.1.823
 
 Api适用版本：**>=12**
 
@@ -131,7 +131,7 @@ ohpm install @abner/dialog
 方式二：在工程的oh-package.json5中设置三方包依赖，配置示例如下：
 
 ```
-"dependencies": { "@abner/dialog": "^1.2.2"}
+"dependencies": { "@abner/dialog": "^1.2.3"}
 ```
 
 <p align="center"><img src="https://vipandroid-image.oss-cn-beijing.aliyuncs.com/harmony/dialog/dialog_01.png" width="300"></p>

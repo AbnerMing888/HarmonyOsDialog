@@ -2,12 +2,13 @@ import {
   BottomAnimationView,
   DialogData,
   hide,
-  hideDialogId,
   setDialogAttribute,
   showDialog,
   showDialogParams,
+  toast,
   updateDialogParams
 } from '@abner/dialog'
+import { window } from '@kit.ArkUI'
 
 /**
  * AUTHOR:AbnerMing
@@ -50,7 +51,6 @@ struct CustomPage {
           dialogDismiss: () => {
             hide()
           },
-          keyboardAvoidMode: KeyboardAvoidMode.NONE
         }).showDialog(wrapBuilder(BuilderDialog))
         break;
       case 2: //自定义弹窗带参数
@@ -139,6 +139,9 @@ function BuilderDialog() {
         })
         Button("确定")
           .margin({ left: 30 })
+          .onClick(() => {
+
+          })
       }.margin({ top: 20 })
       .margin({ top: 30 })
     }.backgroundColor(Color.White)
