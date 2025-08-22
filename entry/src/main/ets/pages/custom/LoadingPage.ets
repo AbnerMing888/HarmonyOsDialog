@@ -1,9 +1,9 @@
-import { hide, loading } from '@abner/dialog'
+import { closeLoading, hide, loading } from '@abner/dialog'
 
 @Entry
 @Component
 struct LoadingPage {
-  private items = ["普通模式", "定时隐藏", "传递数据", "点击外部不消失"]
+  private items = ["普通模式", "定时隐藏", "传递数据", "点击外部不消失", "loading设置ID"]
   private timeoutId: number = -1
 
   build() {
@@ -44,6 +44,14 @@ struct LoadingPage {
         break
       case 3: //点击外部不消失
         loading({ dialogAttribute: { windowClickOutsideHide: false } })
+        break
+      case 4: //loading设置ID
+        loading({ id: "loading" })
+        clearTimeout(this.timeoutId)
+        this.timeoutId = setTimeout(() => {
+          //3秒后隐藏
+          closeLoading("loading")
+        }, 3000)
         break
     }
   }
