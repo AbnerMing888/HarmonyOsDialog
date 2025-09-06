@@ -4,7 +4,10 @@ import { AbilityStage } from '@kit.AbilityKit'
 export default class App extends AbilityStage {
   onCreate() {
     initDialog({
-      isUseMainWindow: false
+      isUseMainWindow: true,
+      dialogAttribute:{
+
+      }
     })
   }
 
